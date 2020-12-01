@@ -25,7 +25,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     @IBOutlet weak var tableView: UITableView!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,10 +41,12 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return imageArray.count
+        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -57,9 +58,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         let image = imageArray[indexPath.row]
         imageView.image = image.image
         label.text = image.date
-        
-        
         return cell
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -68,8 +68,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return view.frame.size.height/3
+        
     }
-    
     
     func setImagePicker(){
         
@@ -77,20 +77,20 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         picker.sourceType = .photoLibrary
         picker.delegate = self
         present(picker, animated: true, completion: nil)
+        
     }
     
     func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
         updateImageViewWithImage(image, fromCropViewController: cropViewController)
+        
     }
 
     //アルバムのキャンセル
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+        
     }
-    
-    
-    
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
@@ -125,7 +125,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             tableView.reloadData()
             
             //日付順に並べる
-            imageArray = imageArray.sorted(by: { (a, b) -> Bool in
+            imageArray = imageArray.sorted(by: {(a, b) -> Bool in
                 return a.date > b.date
                 
             })
@@ -155,15 +155,15 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
             setImagePicker()
+            
         }
-        
-        
         
     }
     
     func cropViewController(_ cropViewController: CropViewController, didCropToCircularImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
         //トリミング編集が終えたら、呼び出される。
         updateImageViewWithImage(image, fromCropViewController: cropViewController)
+        
     }
     
     func updateImageViewWithImage(_ image: UIImage, fromCropViewController cropViewController: CropViewController) {
@@ -171,12 +171,13 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         self.imageView.image = image
         
         cropViewController.dismiss(animated: true, completion: nil)
+        
     }
     
     //セルの編集許可
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool
-    {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool{
         return true
+        
     }
 
     //スワイプしたセルを削除
