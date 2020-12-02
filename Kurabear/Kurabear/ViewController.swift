@@ -117,16 +117,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             let cropController = CropViewController(croppingStyle: .default, image: pickerImage)
             cropController.delegate = self
             cropController.customAspectRatio = CGSize(width: 100, height: 100)
-            
-            //pickerImageをImgeのimageに、shootingDateをImageのdateに表示する。
-            let image = Image(image: pickerImage, date: shootingDate)
-            
-            
-            //日付順に
-            imageArray = imageArray.sorted(by: {(a, b) -> Bool in
-                return a.date > b.date
-                
-            })
            
         }
         
@@ -166,11 +156,18 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     
     func updateImageViewWithImage(_ image: UIImage, fromCropViewController cropViewController: CropViewController) {
+        
         //トリミングした画像をimageViewのimageに代入する。
         self.imageView.image = image
         imageArray.append(Image(image: image, date: shootingDate))
+        imageArray = imageArray.sorted(by: {(a, b) -> Bool in
+            return a.date > b.date
+            
+        })
+        
         tableView.reloadData()
-
+        cropViewController.dismiss(animated: true, completion: nil)
+        
     }
     
     //セルの編集許可
