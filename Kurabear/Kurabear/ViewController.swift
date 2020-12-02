@@ -20,6 +20,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         let date: String
     }
     
+    //日付
+    var shootingDate: String = ""
     //構造体の配列を作成
     var imageArray: [Image] = []
     
@@ -96,8 +98,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         guard (info[UIImagePickerController.InfoKey.originalImage] as? UIImage) != nil else { return }
         
-        //日付
-        var shootingDate: String = ""
         
         // 日時の表示形式
         let formatter = DateFormatter()
@@ -120,15 +120,14 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             
             //pickerImageをImgeのimageに、shootingDateをImageのdateに表示する。
             let image = Image(image: pickerImage, date: shootingDate)
-            imageArray.append(image)
             
-            tableView.reloadData()
             
-            //日付順に並べる
+            //日付順に
             imageArray = imageArray.sorted(by: {(a, b) -> Bool in
                 return a.date > b.date
                 
             })
+           
         }
         
         guard let pickerImage = (info[UIImagePickerController.InfoKey.originalImage] as? UIImage) else { return }
@@ -169,9 +168,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     func updateImageViewWithImage(_ image: UIImage, fromCropViewController cropViewController: CropViewController) {
         //トリミングした画像をimageViewのimageに代入する。
         self.imageView.image = image
-        
-        cropViewController.dismiss(animated: true, completion: nil)
-        
+        imageArray.append(Image(image: image, date: shootingDate))
+        tableView.reloadData()
+
     }
     
     //セルの編集許可
