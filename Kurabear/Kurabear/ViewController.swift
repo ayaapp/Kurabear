@@ -13,15 +13,18 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     var checkPermission = CheckPermission()
     var imageView = UIImageView()
+    //セルを選択した場合の画像と日付
+    var selectedImage: UIImage?
+    var selectedDate: String = ""
+    //日付
+    var shootingDate: String = ""
     
     //画像と日付を構造体を用いてセットにする
     struct Image {
         let image: UIImage
         let date: String
     }
-    
-    //日付
-    var shootingDate: String = ""
+
     //構造体の配列を作成
     var imageArray: [Image] = []
     
@@ -182,6 +185,26 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             imageArray.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
             
+        }
+        
+    // Cell が選択された場合
+    func tableView(_ table: UITableView,didSelectRowAt indexPath: IndexPath) {
+            // UImage を設定
+        selectedImage = imageArray[indexPath.row]
+            
+            if selectedImage != nil {
+                // SubViewController へ遷移するために Segue を呼び出す
+                performSegue(withIdentifier: "toSubViewController",sender: nil)
+            }
+        }
+        
+    // Segue 準備
+    func prepare(for segue: UIStoryboardSegue, sender: Any!) {
+        if (segue.identifier == "toSubViewController") {
+            let subVC: SubViewController = (segue.destination as? SubViewController)!
+            // SubViewController のselectedImgに選択された画像を設定する
+            subVC.selectedImg = selectedImage
+            }
         }
         
     }
