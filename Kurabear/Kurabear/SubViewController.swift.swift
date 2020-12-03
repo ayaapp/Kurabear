@@ -13,12 +13,12 @@ class SubViewController: UIViewController{
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var label: UILabel!
     
-    var selectedImg: UIImage!
+    var selectedImage: UIImage!
     var selectedDate: String = ""
-    
     override func viewDidLoad() {
                 super.viewDidLoad()
-        imageView.image = selectedImg
+        
+        imageView.image = selectedImage
         label.text = selectedDate
         // 画像のアスペクト比を維持しUIImageViewサイズに収まるように表示
         imageView.contentMode = UIView.ContentMode.scaleAspectFit

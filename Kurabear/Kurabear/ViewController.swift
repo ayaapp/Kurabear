@@ -68,11 +68,12 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     // Cell が選択された場合
     func tableView(_ table: UITableView,didSelectRowAt indexPath: IndexPath) {
-                // UImage を設定
+        // UImage を設定
         let image = imageArray[indexPath.row]
-        print("\(indexPath.row)番目の行が選択されました。")
         selectedImage = image.image
         selectedDate = image.date
+        print("\(indexPath.row)番目の行が選択されました。")
+        
         if selectedImage != nil {
             // SubViewController へ遷移するために Segue を呼び出す
             performSegue(withIdentifier: "toSubViewController",sender: nil)
@@ -83,10 +84,11 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         if (segue.identifier == "toSubViewController") {
             let subVC: SubViewController = (segue.destination as? SubViewController)!
-            // SubViewController のselectedImgに選択された画像を設定する
-            subVC.selectedImg = selectedImage
+    // SubViewController のselectedImgに選択された画像を設定する
+            subVC.selectedImage = selectedImage
+            subVC.selectedDate = selectedDate
+                    }
                 }
-            }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return view.frame.size.height/3
