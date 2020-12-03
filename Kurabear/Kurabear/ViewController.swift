@@ -190,7 +190,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     // Cell が選択された場合
     func tableView(_ table: UITableView,didSelectRowAt indexPath: IndexPath) {
             // UImage を設定
-        selectedImage = imageArray[indexPath.row]
+        
+        let image = imageArray[indexPath.row]
+        selectedImage = image.image
+        selectedDate = image.date
             
             if selectedImage != nil {
                 // SubViewController へ遷移するために Segue を呼び出す
