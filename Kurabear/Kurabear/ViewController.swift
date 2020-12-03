@@ -66,10 +66,27 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         return cell
         
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-    }
+        // Cell が選択された場合
+    func tableView(_ table: UITableView,didSelectRowAt indexPath: IndexPath) {
+                // UImage を設定
+        let image = imageArray[indexPath.row]
+        print("\(indexPath.row)番目の行が選択されました。")
+        selectedImage = image.image
+        selectedDate = image.date
+        if selectedImage != nil {
+            // SubViewController へ遷移するために Segue を呼び出す
+            performSegue(withIdentifier: "toSubViewController",sender: nil)
+                }
+            }
+            
+        // Segue 準備
+    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
+        if (segue.identifier == "toSubViewController") {
+            let subVC: SubViewController = (segue.destination as? SubViewController)!
+            // SubViewController のselectedImgに選択された画像を設定する
+            subVC.selectedImg = selectedImage
+                }
+            }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return view.frame.size.height/3
@@ -186,29 +203,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
             
         }
-        
-    // Cell が選択された場合
-    func tableView(_ table: UITableView,didSelectRowAt indexPath: IndexPath) {
-            // UImage を設定
-        
-        let image = imageArray[indexPath.row]
-        selectedImage = image.image
-        selectedDate = image.date
-            
-            if selectedImage != nil {
-                // SubViewController へ遷移するために Segue を呼び出す
-                performSegue(withIdentifier: "toSubViewController",sender: nil)
-            }
-        }
-        
-    // Segue 準備
-    func prepare(for segue: UIStoryboardSegue, sender: Any!) {
-        if (segue.identifier == "toSubViewController") {
-            let subVC: SubViewController = (segue.destination as? SubViewController)!
-            // SubViewController のselectedImgに選択された画像を設定する
-            subVC.selectedImg = selectedImage
-            }
-        }
+    
         
     }
     
