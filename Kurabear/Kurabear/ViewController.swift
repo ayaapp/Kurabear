@@ -125,7 +125,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         let formatter = DateFormatter()
         formatter.timeZone = TimeZone.current
         formatter.locale = Locale.current
-        formatter.dateFormat = "yyyy/MM/dd"
+        formatter.dateFormat = "yyyy / MM / dd"
         
         guard let asset = info[.phAsset] as? PHAsset else { return }
         shootingDate = formatter.string(from: asset.creationDate!)
@@ -135,20 +135,19 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         if let pickerImage = info[.editedImage] as? UIImage{
             
             picker.dismiss(animated: true, completion: nil)
-            
+            //CropViewControllerを初期化する。pickerImageを指定する。
             let cropController = CropViewController(croppingStyle: .default, image: pickerImage)
             cropController.delegate = self
-            cropController.customAspectRatio = CGSize(width: 100, height: 100)
+            cropController.customAspectRatio = CGSize(width: 414, height: 350)
            
         }
         
         guard let pickerImage = (info[UIImagePickerController.InfoKey.originalImage] as? UIImage) else { return }
-        
         //CropViewControllerを初期化する。pickerImageを指定する。
         let cropController = CropViewController(croppingStyle: .default, image: pickerImage)
         
         cropController.delegate = self
-        cropController.customAspectRatio = CGSize(width: 100, height: 100)
+        cropController.customAspectRatio = CGSize(width: 414, height: 350)
         
         //今回は使わないボタン等を非表示にする。
         cropController.aspectRatioPickerButtonHidden = true
