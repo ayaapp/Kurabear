@@ -66,7 +66,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         return cell
         
     }
-        // Cell が選択された場合
+    // Cell が選択された場合
     func tableView(_ table: UITableView,didSelectRowAt indexPath: IndexPath) {
                 // UImage を設定
         let image = imageArray[indexPath.row]
@@ -79,7 +79,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 }
             }
             
-        // Segue 準備
+    // Segue 準備
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         if (segue.identifier == "toSubViewController") {
             let subVC: SubViewController = (segue.destination as? SubViewController)!
