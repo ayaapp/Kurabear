@@ -11,6 +11,7 @@ import CropViewController
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CropViewControllerDelegate {
     
+    // MARK: -Properties
     var checkPermission = CheckPermission()
     var imageView = UIImageView()
     //セルを選択した場合の画像と日付
@@ -43,6 +44,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         setImagePicker()
         
     }
+    // MARK: -tableViewの設定
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return imageArray.count
@@ -66,7 +68,12 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         return cell
         
     }
-    // Cell が選択された場合
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return view.frame.size.height/3
+        
+    }
+    // MARK: -セルが選択された場合
     func tableView(_ table: UITableView,didSelectRowAt indexPath: IndexPath) {
         // UImage を設定
         let image = imageArray[indexPath.row]
@@ -90,11 +97,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                     }
                 }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return view.frame.size.height/3
-        
-    }
-    
+    // MARK: -CropViewControllerでトリミング
     func setImagePicker(){
         
         let picker = UIImagePickerController()
@@ -108,14 +111,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         updateImageViewWithImage(image, fromCropViewController: cropViewController)
         
     }
-
-    //アルバムのキャンセル
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
-        
-    }
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         guard (info[UIImagePickerController.InfoKey.originalImage] as? UIImage) != nil else { return }
@@ -190,7 +185,14 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         cropViewController.dismiss(animated: true, completion: nil)
         
     }
+    // MARK: -アルバムのキャンセル
     
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+        
+    }
+    
+    // MARK: -セルをスワイプ削除
     //セルの編集許可
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool{
         return true
