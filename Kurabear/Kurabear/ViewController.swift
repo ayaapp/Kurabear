@@ -19,11 +19,13 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     var selectedDate: String = ""
     //日付
     var shootingDate: String = ""
+
     
     //画像と日付を構造体を用いてセットにする
     struct Image {
         let image: UIImage
         let date: String
+        var done : Bool = false
     }
 
     //構造体の配列を作成
@@ -38,14 +40,18 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         tableView.dataSource = self
         checkPermission.checkCamera()
         // Do any additional setup after loading the view.
+        tableView.allowsMultipleSelection = true
+
     }
+
+
     
     @IBAction func album(_ sender: Any) {
         setImagePicker()
         
     }
+   
     // MARK: -tableViewの設定
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return imageArray.count
         
@@ -65,6 +71,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         let image = imageArray[indexPath.row]
         imageView.image = image.image
         label.text = image.date
+        
+        //チェックマークを表示する処理ーdoneがtrueだったら表示falseだったら非表示
+        cell.accessoryType = image.done ? .checkmark : .none
+        
         return cell
         
     }
@@ -76,10 +86,13 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     // MARK: -セルが選択された場合
     func tableView(_ table: UITableView,didSelectRowAt indexPath: IndexPath) {
         // UImage を設定
-        let image = imageArray[indexPath.row]
+        var image = imageArray[indexPath.row]
         selectedImage = image.image
         selectedDate = image.date
         print("\(indexPath.row)番目の行が選択されました。")
+        
+        // falseだったらtrue、trueだったらfalseを代入
+        image.done = !image.done
         
         if selectedImage != nil {
             // SubViewController へ遷移するために Segue を呼び出す
@@ -186,7 +199,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
     }
     // MARK: -アルバムのキャンセル
-    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
         
