@@ -10,6 +10,12 @@ import Photos
 import CropViewController
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CropViewControllerDelegate {
+   
+    // MARK: -モードの切り替え
+    enum Mode {
+        case view
+        case select
+      }
     
     // MARK: -Properties
     var checkPermission = CheckPermission()
@@ -19,7 +25,11 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     var selectedDate: String = ""
     //日付
     var shootingDate: String = ""
-
+    
+    var collectionViewFlowLayout: UICollectionViewFlowLayout!
+     let cellIdentifier = "ItemCollectionViewCell"
+     let viewImageSegueIdentifier = "viewImageSegueIdentifier"
+     
     
     //画像と日付を構造体を用いてセットにする
     struct Image {
@@ -40,17 +50,44 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         tableView.dataSource = self
         checkPermission.checkCamera()
         // Do any additional setup after loading the view.
-        tableView.allowsMultipleSelection = true
 
     }
-
-
     
     @IBAction func album(_ sender: Any) {
         setImagePicker()
-        
     }
-   
+    
+    @IBAction func selectBarButton(_ sender: Any) {
+    }
+    
+    var mMode: Mode = .view {
+        didSet {
+          switch mMode {
+          case .view:
+            selectBarButton.title = "写真を比較"
+            tableView.allowsMultipleSelection = false
+
+          case .select:
+            selectBarButton.title = "Cancel"
+            tableView.allowsMultipleSelection = true
+
+          }
+        }
+      }
+  
+    lazy var selectBarButton: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(didSelectButtonClicked(_:)))
+        return barButtonItem
+      }()
+
+    
+    @objc func didSelectButtonClicked(_ sender: UIBarButtonItem) {
+        mMode = mMode == .view ? .select : .view
+      }
+    
+    
+    
+    
     // MARK: -tableViewの設定
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return imageArray.count
@@ -86,19 +123,25 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     // MARK: -セルが選択された場合
     func tableView(_ table: UITableView,didSelectRowAt indexPath: IndexPath) {
         // UImage を設定
-        var image = imageArray[indexPath.row]
-        selectedImage = image.image
-        selectedDate = image.date
-        print("\(indexPath.row)番目の行が選択されました。")
         
-        // falseだったらtrue、trueだったらfalseを代入
-        image.done = !image.done
+        switch mMode {
+            case .view:
+                var image = imageArray[indexPath.row]
+                selectedImage = image.image
+                selectedDate = image.date
+                print("\(indexPath.row)番目の行が選択されました。")
+
+                
+                if selectedImage != nil {
+                    // SubViewController へ遷移するために Segue を呼び出す
+                    performSegue(withIdentifier: "toSubViewController",sender: nil)
+                        }
+            case .select:
+                var image = imageArray[indexPath.row]
+                
+        }
         
-        if selectedImage != nil {
-            // SubViewController へ遷移するために Segue を呼び出す
-            performSegue(withIdentifier: "toSubViewController",sender: nil)
-                }
-            }
+    }
             
     // Segue 準備
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
@@ -221,5 +264,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
         
     }
+    
+    
     
 }
