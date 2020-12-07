@@ -49,43 +49,44 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         tableView.delegate = self
         tableView.dataSource = self
         checkPermission.checkCamera()
-        // Do any additional setup after loading the view.
+        setupBarButtonItems()
 
     }
     
     @IBAction func album(_ sender: Any) {
         setImagePicker()
     }
-    
-    @IBAction func selectBarButton(_ sender: Any) {
-    }
-    
-    var mMode: Mode = .view {
-        didSet {
-          switch mMode {
-          case .view:
-            selectBarButton.title = "写真を比較"
-            tableView.allowsMultipleSelection = false
+   
+        
+        var mMode: Mode = .view {
+            didSet {
+              switch mMode {
+              case .view:
+                selectBarButton.title = "Select"
+                tableView.allowsMultipleSelection = false
 
-          case .select:
-            selectBarButton.title = "Cancel"
-            tableView.allowsMultipleSelection = true
+              case .select:
+                selectBarButton.title = "Cancel"
+                tableView.allowsMultipleSelection = true
 
+              }
+            }
           }
-        }
-      }
-  
+        
     lazy var selectBarButton: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(didSelectButtonClicked(_:)))
-        return barButtonItem
-      }()
+       let barButtonItem = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(didSelectButtonClicked(_:)))
+       return barButtonItem
+     }()
 
     
-    @objc func didSelectButtonClicked(_ sender: UIBarButtonItem) {
-        mMode = mMode == .view ? .select : .view
-      }
-    
-    
+    private func setupBarButtonItems() {
+            navigationItem.leftBarButtonItem = selectBarButton
+          }
+        
+        @objc func didSelectButtonClicked(_ sender: UIBarButtonItem) {
+            mMode = mMode == .view ? .select : .view
+          }
+
     
     
     // MARK: -tableViewの設定
