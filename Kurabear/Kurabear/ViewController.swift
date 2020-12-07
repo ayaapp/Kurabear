@@ -57,36 +57,37 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         setImagePicker()
     }
    
-        
-        var mMode: Mode = .view {
-            didSet {
-              switch mMode {
-              case .view:
+    // MARK: -モードの切り替え
+    var mMode: Mode = .view {
+        didSet {
+            switch mMode {
+            case .view:
                 selectBarButton.title = "Select"
                 tableView.allowsMultipleSelection = false
-
-              case .select:
+                
+            case .select:
                 selectBarButton.title = "Cancel"
                 tableView.allowsMultipleSelection = true
-
-              }
+                
             }
-          }
-        
+        }
+    }
+    
     lazy var selectBarButton: UIBarButtonItem = {
-       let barButtonItem = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(didSelectButtonClicked(_:)))
-       return barButtonItem
-     }()
-
+        let barButtonItem = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(didSelectButtonClicked(_:)))
+        return barButtonItem
+    }()
+    
     
     private func setupBarButtonItems() {
-            navigationItem.leftBarButtonItem = selectBarButton
-          }
-        
-        @objc func didSelectButtonClicked(_ sender: UIBarButtonItem) {
-            mMode = mMode == .view ? .select : .view
-          }
-
+        navigationItem.leftBarButtonItem = selectBarButton
+    }
+    
+    //Selectを押すとviewモードからselectモードに変更
+    @objc func didSelectButtonClicked(_ sender: UIBarButtonItem) {
+        mMode = mMode == .view ? .select : .view
+    }
+    
     
     
     // MARK: -tableViewの設定
@@ -126,20 +127,20 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         // UImage を設定
         
         switch mMode {
-            case .view:
-                var image = imageArray[indexPath.row]
-                selectedImage = image.image
-                selectedDate = image.date
-                print("\(indexPath.row)番目の行が選択されました。")
-
-                
-                if selectedImage != nil {
-                    // SubViewController へ遷移するために Segue を呼び出す
-                    performSegue(withIdentifier: "toSubViewController",sender: nil)
-                        }
-            case .select:
-                var image = imageArray[indexPath.row]
-                
+        case .view:
+            var image = imageArray[indexPath.row]
+            selectedImage = image.image
+            selectedDate = image.date
+            print("\(indexPath.row)番目の行が選択されました。")
+            
+            
+            if selectedImage != nil {
+                // SubViewController へ遷移するために Segue を呼び出す
+                performSegue(withIdentifier: "toSubViewController",sender: nil)
+            }
+        case .select:
+            var image = imageArray[indexPath.row]
+            
         }
         
     }
