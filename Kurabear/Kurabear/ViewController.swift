@@ -62,10 +62,13 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             switch mMode {
             case .view:
                 selectBarButton.title = "Select"
+                album.title = "Add"
                 tableView.allowsMultipleSelection = false
+                
                 
             case .select:
                 selectBarButton.title = "Cancel"
+                album.title = "Done"
                 tableView.allowsMultipleSelection = true
                 
             }
@@ -76,6 +79,13 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         didSet {
             selectBarButton.target = self
             selectBarButton.action = #selector(didSelectButtonClicked(_:))
+        }
+    }
+
+    @IBOutlet weak var album: UIBarButtonItem!{
+        didSet {
+            album.target = self
+            album.action = #selector(didSelectButtonClicked(_:))
         }
     }
     
@@ -106,9 +116,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         let image = imageArray[indexPath.row]
         imageView.image = image.image
         label.text = image.date
-        
-        //チェックマークを表示する処理ーdoneがtrueだったら表示falseだったら非表示
-        cell.accessoryType = image.done ? .checkmark : .none
         
         return cell
         
