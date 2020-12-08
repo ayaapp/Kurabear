@@ -49,7 +49,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         tableView.delegate = self
         tableView.dataSource = self
         checkPermission.checkCamera()
-        setupBarButtonItems()
 
     }
     
@@ -72,15 +71,12 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             }
         }
     }
-    
-    lazy var selectBarButton: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(didSelectButtonClicked(_:)))
-        return barButtonItem
-    }()
-    
-    
-    private func setupBarButtonItems() {
-        navigationItem.leftBarButtonItem = selectBarButton
+   
+    @IBOutlet weak var selectBarButton: UIBarButtonItem!{
+        didSet {
+            selectBarButton.target = self
+            selectBarButton.action = #selector(didSelectButtonClicked(_:))
+        }
     }
     
     //Selectを押すとviewモードからselectモードに変更

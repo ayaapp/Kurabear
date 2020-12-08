@@ -86,6 +86,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
+                        <outlet property="selectBarButton" destination="sqo-Z9-gvD" id="A9o-nn-vBf"/>
                         <outlet property="tableView" destination="YmJ-sJ-T1r" id="5yU-SY-kJk"/>
                         <segue destination="Yau-B8-lbh" kind="presentation" identifier="toSubViewController" id="FD3-La-0qS"/>
                     </connections>
