@@ -49,7 +49,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         tableView.delegate = self
         tableView.dataSource = self
         checkPermission.checkCamera()
-
+        self.tableView.register(UINib(nibName: "View", bundle: nil), forCellReuseIdentifier:  "View")
     }
     
     @IBAction func album(_ sender: Any) {
@@ -126,6 +126,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
     }
     // MARK: -セルが選択された場合
+
+    
     func tableView(_ table: UITableView,didSelectRowAt indexPath: IndexPath) {
         // UImage を設定
         
@@ -142,8 +144,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 performSegue(withIdentifier: "toSubViewController",sender: nil)
             }
         case .select:
-            var image = imageArray[indexPath.row]
-            
+            let cell = tableView.cellForRow(at:indexPath)
+            cell?.accessoryType = .checkmark
         }
         
     }
@@ -157,7 +159,13 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             subVC.selectedDate = selectedDate
                     }
                 }
-    
+    //MARK: -セルの選択が外れた時に呼び出される
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at:indexPath)
+
+        // チェックマークを外す
+        cell?.accessoryType = .none
+    }
     // MARK: -CropViewControllerでトリミング
     func setImagePicker(){
         
