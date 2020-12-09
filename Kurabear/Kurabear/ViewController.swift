@@ -49,7 +49,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         tableView.delegate = self
         tableView.dataSource = self
         checkPermission.checkCamera()
-        self.tableView.register(UINib(nibName: "View", bundle: nil), forCellReuseIdentifier:  "View")
     }
     
     @IBAction func album(_ sender: Any) {
@@ -64,8 +63,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 selectBarButton.title = "Select"
                 album.title = "Add"
                 tableView.allowsMultipleSelection = false
-                
-                
+                let cell = tableView.cellForRow(at:indexPath)
+                cell?.accessoryType = .none
+
             case .select:
                 selectBarButton.title = "Cancel"
                 album.title = "Done"
@@ -89,12 +89,11 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         }
     }
     
-    //Selectを押すとviewモードからselectモードに変更
+    //Selectを押すとモード変更
     @objc func didSelectButtonClicked(_ sender: UIBarButtonItem) {
         mMode = mMode == .view ? .select : .view
     
     }
-    
     
     
     // MARK: -tableViewの設定
@@ -135,9 +134,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             var image = imageArray[indexPath.row]
             selectedImage = image.image
             selectedDate = image.date
-            let cell = tableView.cellForRow(at:indexPath)
-            cell?.accessoryType = .none
-            
             print("\(indexPath.row)番目の行が選択されました。")
             
             if selectedImage != nil {
