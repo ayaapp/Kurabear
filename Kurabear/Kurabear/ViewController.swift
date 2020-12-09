@@ -25,6 +25,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     var selectedDate: String = ""
     //日付
     var shootingDate: String = ""
+    var checkedCell = [Int]()
+
     
     var collectionViewFlowLayout: UICollectionViewFlowLayout!
      let cellIdentifier = "ItemCollectionViewCell"
@@ -65,6 +67,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 tableView.allowsMultipleSelection = false
                 let cell = tableView.cellForRow(at:indexPath)
                 cell?.accessoryType = .none
+    
 
             case .select:
                 selectBarButton.title = "Cancel"
@@ -144,6 +147,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         case .select:
             let cell = tableView.cellForRow(at:indexPath)
             cell?.accessoryType = .checkmark
+            checkedCell.append(indexPath.row)
         }
         
     }
