@@ -92,6 +92,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     //Selectを押すとviewモードからselectモードに変更
     @objc func didSelectButtonClicked(_ sender: UIBarButtonItem) {
         mMode = mMode == .view ? .select : .view
+    
     }
     
     
@@ -126,8 +127,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
     }
     // MARK: -セルが選択された場合
-
-    
     func tableView(_ table: UITableView,didSelectRowAt indexPath: IndexPath) {
         // UImage を設定
         
@@ -136,12 +135,15 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             var image = imageArray[indexPath.row]
             selectedImage = image.image
             selectedDate = image.date
-            print("\(indexPath.row)番目の行が選択されました。")
+            let cell = tableView.cellForRow(at:indexPath)
+            cell?.accessoryType = .none
             
+            print("\(indexPath.row)番目の行が選択されました。")
             
             if selectedImage != nil {
                 // SubViewController へ遷移するために Segue を呼び出す
                 performSegue(withIdentifier: "toSubViewController",sender: nil)
+                
             }
         case .select:
             let cell = tableView.cellForRow(at:indexPath)
