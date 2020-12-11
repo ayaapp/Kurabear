@@ -135,6 +135,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             
             if selectedImage != nil {
                 // SubViewController へ遷移するために Segue を呼び出す
+                tableView.deselectRow(at: indexPath, animated: true)
                 performSegue(withIdentifier: "toSubViewController",sender: nil)
                 
             }
@@ -150,7 +151,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         }
         
     }
-            
+    
     // Segue 準備
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         if (segue.identifier == "toSubViewController") {
@@ -161,12 +162,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                     }
                 }
     //MARK: -セルの選択が外れた時に呼び出される
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at:indexPath)
-
-        // チェックマークを外す
-        cell?.accessoryType = .none
-    }
+       func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+           let cell = tableView.cellForRow(at:indexPath)
+       }
+    
     // MARK: -CropViewControllerでトリミング
     func setImagePicker(){
         
