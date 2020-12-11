@@ -142,9 +142,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         case .select:
             selectedCell.append(indexPath)
             if (selectedCell.count == 3) {
-                let cell = tableView.cellForRow(at: selectedCell[0])
-                cell?.accessoryType = .none
-                selectedCell.dropFirst()
+                tableView.deselectRow(at: selectedCell[0], animated: true)
+                selectedCell.removeFirst()
+    
             }
         }
         
