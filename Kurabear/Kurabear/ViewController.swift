@@ -146,6 +146,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             if(selectedCell.count == 3)
             {
                 selectedCell.dropFirst()
+                tableView.deselectRow(at: indexPath, animated: true)
+                let cell = tableView.cellForRow(at:indexPath)
+                cell?.backgroundColor = .clear
                 
             }
         }
@@ -162,9 +165,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                     }
                 }
     //MARK: -セルの選択が外れた時に呼び出される
-       func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-           let cell = tableView.cellForRow(at:indexPath)
-       }
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at:indexPath)
+        cell?.backgroundColor = .clear
+    }
     
     // MARK: -CropViewControllerでトリミング
     func setImagePicker(){
