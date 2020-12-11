@@ -25,7 +25,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     var selectedDate: String = ""
     //日付
     var shootingDate: String = ""
-    var selectedCell = [Int]()
+    var selectedCell = [IndexPath]()
 
     
     var collectionViewFlowLayout: UICollectionViewFlowLayout!
@@ -140,16 +140,11 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 
             }
         case .select:
-            if let cell = tableView.cellForRow(at: indexPath) {
-                selectedCell.append(indexPath.row)
-            }
-            if(selectedCell.count == 3)
-            {
+            selectedCell.append(indexPath)
+            if (selectedCell.count == 3) {
+                let cell = tableView.cellForRow(at: selectedCell[0])
+                cell?.accessoryType = .none
                 selectedCell.dropFirst()
-                tableView.deselectRow(at: indexPath, animated: true)
-                let cell = tableView.cellForRow(at:indexPath)
-                cell?.backgroundColor = .clear
-                
             }
         }
         
