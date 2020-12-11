@@ -25,7 +25,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     var selectedDate: String = ""
     //日付
     var shootingDate: String = ""
-    var checkedCell = [Int]()
+    var selectedCell = [Int]()
 
     
     var collectionViewFlowLayout: UICollectionViewFlowLayout!
@@ -56,7 +56,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     @IBAction func album(_ sender: Any) {
         setImagePicker()
     }
-   
     // MARK: -モードの切り替え
     var mMode: Mode = .view {
         didSet {
@@ -65,10 +64,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 selectBarButton.title = "Select"
                 album.title = "Add"
                 tableView.allowsMultipleSelection = false
-                let cell = tableView.cellForRow(at:indexPath)
-                cell?.accessoryType = .none
-    
-
+                
             case .select:
                 selectBarButton.title = "Cancel"
                 album.title = "Done"
@@ -95,9 +91,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     //Selectを押すとモード変更
     @objc func didSelectButtonClicked(_ sender: UIBarButtonItem) {
         mMode = mMode == .view ? .select : .view
-    
     }
-    
     
     // MARK: -tableViewの設定
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -111,7 +105,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let imageView = cell.contentView.viewWithTag(1) as! UIImageView
         let label = cell.contentView.viewWithTag(2) as! UILabel
@@ -130,7 +124,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     // MARK: -セルが選択された場合
     func tableView(_ table: UITableView,didSelectRowAt indexPath: IndexPath) {
-        // UImage を設定
+        
         
         switch mMode {
         case .view:
@@ -145,9 +139,14 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 
             }
         case .select:
-            let cell = tableView.cellForRow(at:indexPath)
-            cell?.accessoryType = .checkmark
-            checkedCell.append(indexPath.row)
+            if let cell = tableView.cellForRow(at: indexPath) {
+                selectedCell.append(indexPath.row)
+            }
+            if(selectedCell.count == 3)
+            {
+                selectedCell.dropFirst()
+                
+            }
         }
         
     }
@@ -155,10 +154,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     // Segue 準備
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         if (segue.identifier == "toSubViewController") {
-            let subVC: SubViewController = (segue.destination as? SubViewController)!
+            let SubViewController: SubViewController = (segue.destination as? SubViewController)!
     // SubViewController のselectedImgに選択された画像を設定する
-            subVC.selectedImage = selectedImage
-            subVC.selectedDate = selectedDate
+            SubViewController.selectedImage = selectedImage
+            SubViewController.selectedDate = selectedDate
                     }
                 }
     //MARK: -セルの選択が外れた時に呼び出される
