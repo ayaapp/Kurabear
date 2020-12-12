@@ -61,9 +61,15 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         didSet {
             switch mMode {
             case .view:
-                selectBarButton.title = "Select"
-                album.title = "Add"
-                tableView.allowsMultipleSelection = false
+                if (imageArray.count < 2) {
+                    selectBarButton.isEnabled = false
+                    album.title = "Add"
+                    tableView.allowsMultipleSelection = false
+                }else{
+                    selectBarButton.isEnabled = true
+                    selectBarButton.title = "Select"
+                    album.title = "Add"
+                }
                 
             case .select:
                 selectBarButton.title = "Cancel"
@@ -113,7 +119,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         let image = imageArray[indexPath.row]
         imageView.image = image.image
         label.text = image.date
-        
+    
         return cell
         
     }
@@ -140,11 +146,18 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 
             }
         case .select:
+            
             selectedCell.append(indexPath)
+            let cell = tableView.cellForRow(at: indexPath)
+            cell?.accessoryType = .checkmark
+            
             if (selectedCell.count == 3) {
+                let cell = tableView.cellForRow(at: selectedCell[0])
+                cell?.accessoryType = .none
                 tableView.deselectRow(at: selectedCell[0], animated: true)
                 selectedCell.removeFirst()
-    
+
+                
             }
         }
         
@@ -162,7 +175,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     //MARK: -セルの選択が外れた時に呼び出される
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at:indexPath)
-        cell?.backgroundColor = .clear
+        cell?.accessoryType = .none
     }
     
     // MARK: -CropViewControllerでトリミング
