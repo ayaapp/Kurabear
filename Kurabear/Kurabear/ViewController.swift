@@ -159,7 +159,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             //CropViewControllerを初期化する。pickerImageを指定する。
             let cropController = CropViewController(croppingStyle: .default, image: pickerImage)
             cropController.delegate = self
-            cropController.customAspectRatio = CGSize(width: 390, height: 280)
+            cropController.customAspectRatio = CGSize(width: 390, height: 250)
             
         }
         
@@ -168,7 +168,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         let cropController = CropViewController(croppingStyle: .default, image: pickerImage)
         
         cropController.delegate = self
-        cropController.customAspectRatio = CGSize(width: 390, height: 280)
+        cropController.customAspectRatio = CGSize(width: 390, height: 250)
         
         //今回は使わないボタン等を非表示にする。
         cropController.aspectRatioPickerButtonHidden = true
