@@ -11,12 +11,6 @@ import CropViewController
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CropViewControllerDelegate {
    
-    // MARK: -モードの切り替え
-    enum Mode {
-        case view
-        case select
-      }
-    
     // MARK: -Properties
     var checkPermission = CheckPermission()
     var imageView = UIImageView()
@@ -26,24 +20,29 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     //日付
     var shootingDate: String = ""
     var selectedCell = [IndexPath]()
-
+    
     
     var collectionViewFlowLayout: UICollectionViewFlowLayout!
-     let cellIdentifier = "ItemCollectionViewCell"
-     let viewImageSegueIdentifier = "viewImageSegueIdentifier"
-     
+    let cellIdentifier = "ItemCollectionViewCell"
+    let viewImageSegueIdentifier = "viewImageSegueIdentifier"
+    
     
     //画像と日付を構造体を用いてセットにする
     struct Image {
         let image: UIImage
         let date: String
-        var done : Bool = false
     }
-
+    
     //構造体の配列を作成
-    var imageArray: [Image] = []
+    var imageArray: [Image] = [] {
+        didSet {
+            editButtonItem.isEnabled = imageArray.count > 1
+        }
+    }
     
     @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var album: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,53 +50,26 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         tableView.delegate = self
         tableView.dataSource = self
         checkPermission.checkCamera()
+        navigationItem.leftBarButtonItem = editButtonItem
+        navigationItem.rightBarButtonItem = album
+
+        if (imageArray.count < 2) {
+            editButtonItem.isEnabled = false
+        }
+        tableView.allowsMultipleSelectionDuringEditing = true
     }
+    
     
     @IBAction func album(_ sender: Any) {
         setImagePicker()
     }
-    // MARK: -モードの切り替え
-    var mMode: Mode = .view {
-        didSet {
-            switch mMode {
-            case .view:
-                if (imageArray.count < 2) {
-                    selectBarButton.isEnabled = false
-                    album.title = "Add"
-                    tableView.allowsMultipleSelection = false
-                }else{
-                    selectBarButton.isEnabled = true
-                    selectBarButton.title = "Select"
-                    album.title = "Add"
-                }
-                
-            case .select:
-                selectBarButton.title = "Cancel"
-                album.title = "Done"
-                tableView.allowsMultipleSelection = true
-                
-            }
-        }
-    }
-   
-    @IBOutlet weak var selectBarButton: UIBarButtonItem!{
-        didSet {
-            selectBarButton.target = self
-            selectBarButton.action = #selector(didSelectButtonClicked(_:))
-        }
+    
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        tableView.isEditing = editing
     }
 
-    @IBOutlet weak var album: UIBarButtonItem!{
-        didSet {
-            album.target = self
-            album.action = #selector(didSelectButtonClicked(_:))
-        }
-    }
-    
-    //Selectを押すとモード変更
-    @objc func didSelectButtonClicked(_ sender: UIBarButtonItem) {
-        mMode = mMode == .view ? .select : .view
-    }
     
     // MARK: -tableViewの設定
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -111,7 +83,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let imageView = cell.contentView.viewWithTag(1) as! UIImageView
         let label = cell.contentView.viewWithTag(2) as! UILabel
@@ -119,64 +91,62 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         let image = imageArray[indexPath.row]
         imageView.image = image.image
         label.text = image.date
-    
+        
         return cell
         
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return view.frame.size.height/3
-        
-    }
-    // MARK: -セルが選択された場合
-    func tableView(_ table: UITableView,didSelectRowAt indexPath: IndexPath) {
-        
-        
-        switch mMode {
-        case .view:
-            var image = imageArray[indexPath.row]
-            selectedImage = image.image
-            selectedDate = image.date
-            print("\(indexPath.row)番目の行が選択されました。")
-            
-            if selectedImage != nil {
-                // SubViewController へ遷移するために Segue を呼び出す
-                tableView.deselectRow(at: indexPath, animated: true)
-                performSegue(withIdentifier: "toSubViewController",sender: nil)
-                
-            }
-        case .select:
-            
-            selectedCell.append(indexPath)
-            let cell = tableView.cellForRow(at: indexPath)
-            cell?.accessoryType = .checkmark
-            
-            if (selectedCell.count == 3) {
-                let cell = tableView.cellForRow(at: selectedCell[0])
-                cell?.accessoryType = .none
-                tableView.deselectRow(at: selectedCell[0], animated: true)
-                selectedCell.removeFirst()
-
-                
-            }
-        }
+        return view.frame.size.height/2
         
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("選択された行 - \(indexPath.row)")
+        
+        if self.tableView.isEditing == true{
+            tableView.allowsSelection = false
+        }
+        
+        var image = imageArray[indexPath.row]
+        selectedImage = image.image
+        selectedDate = image.date
+        print("\(indexPath.row)番目の行が選択されました。")
+        
+        if selectedImage != nil {
+            // SubViewController へ遷移するために Segue を呼び出す
+            tableView.deselectRow(at: indexPath, animated: true)
+            performSegue(withIdentifier: "SubViewController",sender: nil)
+            
+
+        }
+        
+        selectedCell.append(indexPath)
+        if (selectedCell.count == 3) {
+            let cell = tableView.cellForRow(at: selectedCell[0])
+            tableView.deselectRow(at: selectedCell[0], animated: true)
+            selectedCell.removeFirst()
+            
+        }
+        
+        if(tableView.isEditing == true) {
+            let cell = tableView.cellForRow(at: indexPath)
+            cell?.selectionStyle = .none
+        }
+    }
     // Segue 準備
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
-        if (segue.identifier == "toSubViewController") {
+        if (segue.identifier == "SubViewController") {
             let SubViewController: SubViewController = (segue.destination as? SubViewController)!
-    // SubViewController のselectedImgに選択された画像を設定する
+            // SubViewController のselectedImgに選択された画像を設定する
             SubViewController.selectedImage = selectedImage
             SubViewController.selectedDate = selectedDate
-                    }
-                }
-    //MARK: -セルの選択が外れた時に呼び出される
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at:indexPath)
-        cell?.accessoryType = .none
+        }
     }
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        print("選択が解除された行 - \(indexPath.row)")
+    }
+    
     
     // MARK: -CropViewControllerでトリミング
     func setImagePicker(){
@@ -214,8 +184,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             //CropViewControllerを初期化する。pickerImageを指定する。
             let cropController = CropViewController(croppingStyle: .default, image: pickerImage)
             cropController.delegate = self
-            cropController.customAspectRatio = CGSize(width: 414, height: 350)
-           
+            cropController.customAspectRatio = CGSize(width: 414, height: 308)
+            
         }
         
         guard let pickerImage = (info[UIImagePickerController.InfoKey.originalImage] as? UIImage) else { return }
@@ -223,7 +193,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         let cropController = CropViewController(croppingStyle: .default, image: pickerImage)
         
         cropController.delegate = self
-        cropController.customAspectRatio = CGSize(width: 414, height: 350)
+        cropController.customAspectRatio = CGSize(width: 414, height: 308)
         
         //今回は使わないボタン等を非表示にする。
         cropController.aspectRatioPickerButtonHidden = true
@@ -289,7 +259,5 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
         
     }
-    
-    
     
 }

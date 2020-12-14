@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9918800F2580363A007444C6 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9918800D2580363A007444C6 /* View.swift */; };
-		991880102580363A007444C6 /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9918800E2580363A007444C6 /* View.xib */; };
 		99293B08256B326A00DB1516 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99293B07256B326A00DB1516 /* AppDelegate.swift */; };
 		99293B0A256B326A00DB1516 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99293B09256B326A00DB1516 /* SceneDelegate.swift */; };
 		99293B0C256B326A00DB1516 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99293B0B256B326A00DB1516 /* ViewController.swift */; };
@@ -16,14 +14,12 @@
 		99293B11256B326F00DB1516 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99293B10256B326F00DB1516 /* Assets.xcassets */; };
 		99293B14256B326F00DB1516 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99293B12256B326F00DB1516 /* LaunchScreen.storyboard */; };
 		99293B1F256B380F00DB1516 /* CheckPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99293B1E256B380F00DB1516 /* CheckPermission.swift */; };
-		99C8E54725785DFF00A17186 /* SubViewController.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C8E54625785DFF00A17186 /* SubViewController.swift.swift */; };
+		995D9D372585FAA700011DBF /* SubViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995D9D362585FAA700011DBF /* SubViewController.swift */; };
 		DC66D4FECE1393109F529C78 /* Pods_Kurabear.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD9F3AEA6DF39108BD94CBBA /* Pods_Kurabear.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6F0C5E0F742159462C5E3461 /* Pods-Kurabear.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kurabear.debug.xcconfig"; path = "Target Support Files/Pods-Kurabear/Pods-Kurabear.debug.xcconfig"; sourceTree = "<group>"; };
-		9918800D2580363A007444C6 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
-		9918800E2580363A007444C6 /* View.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = View.xib; sourceTree = "<group>"; };
 		99293B04256B326A00DB1516 /* Kurabear.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kurabear.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99293B07256B326A00DB1516 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		99293B09256B326A00DB1516 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -33,7 +29,7 @@
 		99293B13256B326F00DB1516 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		99293B15256B326F00DB1516 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99293B1E256B380F00DB1516 /* CheckPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckPermission.swift; sourceTree = "<group>"; };
-		99C8E54625785DFF00A17186 /* SubViewController.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubViewController.swift.swift; sourceTree = "<group>"; };
+		995D9D362585FAA700011DBF /* SubViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubViewController.swift; sourceTree = "<group>"; };
 		AC6C2E9407E9250874E24DA4 /* Pods-Kurabear.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kurabear.release.xcconfig"; path = "Target Support Files/Pods-Kurabear/Pods-Kurabear.release.xcconfig"; sourceTree = "<group>"; };
 		CD9F3AEA6DF39108BD94CBBA /* Pods_Kurabear.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kurabear.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -74,11 +70,9 @@
 				99293B07256B326A00DB1516 /* AppDelegate.swift */,
 				99293B09256B326A00DB1516 /* SceneDelegate.swift */,
 				99293B0B256B326A00DB1516 /* ViewController.swift */,
+				995D9D362585FAA700011DBF /* SubViewController.swift */,
 				99293B1E256B380F00DB1516 /* CheckPermission.swift */,
 				99293B0D256B326A00DB1516 /* Main.storyboard */,
-				9918800D2580363A007444C6 /* View.swift */,
-				9918800E2580363A007444C6 /* View.xib */,
-				99C8E54625785DFF00A17186 /* SubViewController.swift.swift */,
 				99293B10256B326F00DB1516 /* Assets.xcassets */,
 				99293B12256B326F00DB1516 /* LaunchScreen.storyboard */,
 				99293B15256B326F00DB1516 /* Info.plist */,
@@ -162,7 +156,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				991880102580363A007444C6 /* View.xib in Resources */,
 				99293B14256B326F00DB1516 /* LaunchScreen.storyboard in Resources */,
 				99293B11256B326F00DB1516 /* Assets.xcassets in Resources */,
 				99293B0F256B326A00DB1516 /* Main.storyboard in Resources */,
@@ -220,8 +213,7 @@
 			files = (
 				99293B0C256B326A00DB1516 /* ViewController.swift in Sources */,
 				99293B08256B326A00DB1516 /* AppDelegate.swift in Sources */,
-				9918800F2580363A007444C6 /* View.swift in Sources */,
-				99C8E54725785DFF00A17186 /* SubViewController.swift.swift in Sources */,
+				995D9D372585FAA700011DBF /* SubViewController.swift in Sources */,
 				99293B0A256B326A00DB1516 /* SceneDelegate.swift in Sources */,
 				99293B1F256B380F00DB1516 /* CheckPermission.swift in Sources */,
 			);
