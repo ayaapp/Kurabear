@@ -4,7 +4,6 @@
 //
 //  Created by AYN2K on 2020/11/23.
 //
-
 import UIKit
 import Photos
 import CropViewController
@@ -103,23 +102,11 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("選択された行 - \(indexPath.row)")
-        
-        if self.tableView.isEditing == true{
-            tableView.allowsSelection = false
-        }
-        
         var image = imageArray[indexPath.row]
         selectedImage = image.image
         selectedDate = image.date
-        print("\(indexPath.row)番目の行が選択されました。")
         
-        if selectedImage != nil {
-            // SubViewController へ遷移するために Segue を呼び出す
-            tableView.deselectRow(at: indexPath, animated: true)
-            performSegue(withIdentifier: "SubViewController",sender: nil)
-            
-
-        }
+        print("\(indexPath.row)番目の行が選択されました。")
         
         selectedCell.append(indexPath)
         if (selectedCell.count == 3) {
@@ -129,20 +116,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             
         }
         
-        if(tableView.isEditing == true) {
-            let cell = tableView.cellForRow(at: indexPath)
-            cell?.selectionStyle = .none
-        }
     }
-    // Segue 準備
-    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
-        if (segue.identifier == "SubViewController") {
-            let SubViewController: SubViewController = (segue.destination as? SubViewController)!
-            // SubViewController のselectedImgに選択された画像を設定する
-            SubViewController.selectedImage = selectedImage
-            SubViewController.selectedDate = selectedDate
-        }
-    }
+    
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         print("選択が解除された行 - \(indexPath.row)")
     }
@@ -184,7 +159,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             //CropViewControllerを初期化する。pickerImageを指定する。
             let cropController = CropViewController(croppingStyle: .default, image: pickerImage)
             cropController.delegate = self
-            cropController.customAspectRatio = CGSize(width: 414, height: 308)
+            cropController.customAspectRatio = CGSize(width: 390, height: 280)
             
         }
         
@@ -193,7 +168,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         let cropController = CropViewController(croppingStyle: .default, image: pickerImage)
         
         cropController.delegate = self
-        cropController.customAspectRatio = CGSize(width: 414, height: 308)
+        cropController.customAspectRatio = CGSize(width: 390, height: 280)
         
         //今回は使わないボタン等を非表示にする。
         cropController.aspectRatioPickerButtonHidden = true
@@ -261,3 +236,4 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     
 }
+
