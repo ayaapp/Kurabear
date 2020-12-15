@@ -67,6 +67,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         tableView.isEditing = editing
+        if self.tableView.isEditing == true{
+            album.isEnabled = false
+               }
+
     }
 
     
@@ -90,6 +94,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         let image = imageArray[indexPath.row]
         imageView.image = image.image
         label.text = image.date
+        
         
         return cell
         
