@@ -35,7 +35,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     //構造体の配列を作成
     var imageArray: [Image] = [] {
         didSet {
-            editButtonItem.isEnabled = imageArray.count > 1
+            
         }
     }
     
@@ -51,11 +51,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         checkPermission.checkCamera()
         navigationItem.leftBarButtonItem = editButtonItem
         navigationItem.rightBarButtonItem = album
-        
+        self.navigationController?.navigationBar.tintColor = .gray
 
-        if (imageArray.count < 2) {
-            editButtonItem.isEnabled = false
-        }
+        
         tableView.allowsMultipleSelectionDuringEditing = true
     }
     
@@ -73,7 +71,18 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         }else{
             album.isEnabled = true
         }
-
+        
+        if(imageArray.count < 2) {
+            tableView.isEditing = false
+            let alert = UIAlertController(title: "写真を比較できません", message: "2枚以上の写真が必要です。", preferredStyle: .alert)
+            //ここから追加
+            let ok = UIAlertAction(title: "OK", style: .default) { (action) in
+                self.dismiss(animated: true, completion: nil)
+            }
+            alert.addAction(ok)
+            //ここまで追加
+            present(alert, animated: true, completion: nil)
+        }
     }
 
     
