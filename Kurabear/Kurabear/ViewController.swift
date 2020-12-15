@@ -51,6 +51,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         checkPermission.checkCamera()
         navigationItem.leftBarButtonItem = editButtonItem
         navigationItem.rightBarButtonItem = album
+        
 
         if (imageArray.count < 2) {
             editButtonItem.isEnabled = false
@@ -69,7 +70,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         tableView.isEditing = editing
         if self.tableView.isEditing == true{
             album.isEnabled = false
-               }
+        }else{
+            album.isEnabled = true
+        }
 
     }
 

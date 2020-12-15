@@ -54,11 +54,14 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="1" green="0.0" blue="0.39906293722427782" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="Kurabear" id="6sq-yV-0iR">
-                        <barButtonItem key="leftBarButtonItem" title="Select" id="MO1-uU-uW4"/>
-                        <barButtonItem key="rightBarButtonItem" title="Add" id="yQV-Nl-7XD">
+                        <barButtonItem key="leftBarButtonItem" title="Select" id="MO1-uU-uW4">
+                            <color key="tintColor" red="0.2762508095854922" green="0.2762508095854922" blue="0.2762508095854922" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Add" image="plus" catalog="system" id="yQV-Nl-7XD">
+                            <color key="tintColor" red="0.22596295560214702" green="0.21851900675215971" blue="0.22674465673575128" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="album:" destination="BYZ-38-t0r" id="Cuw-QI-Jd5"/>
                             </connections>
@@ -161,6 +164,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
