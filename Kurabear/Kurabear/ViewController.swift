@@ -85,7 +85,12 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             present(alert, animated: true, completion: nil)
         }
     }
-
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool{
+    
+        if(indexPath.row < 2) { return false }
+        else { return true }
+    }
     
     // MARK: -tableViewの設定
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -139,6 +144,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         print("選択が解除された行 - \(indexPath.row)")
     }
+    
     
     
     // MARK: -CropViewControllerでトリミング
