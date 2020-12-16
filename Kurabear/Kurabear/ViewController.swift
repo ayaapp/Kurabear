@@ -49,7 +49,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         checkPermission.checkCamera()
         navigationItem.leftBarButtonItem = editButtonItem
         navigationItem.rightBarButtonItem = album
-        self.navigationController?.navigationBar.tintColor = .gray
+        self.navigationController?.navigationBar.tintColor =  .gray
 
         
         tableView.allowsMultipleSelectionDuringEditing = true
@@ -62,6 +62,17 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     // MARK: -編集モードの設定
     override func setEditing(_ editing: Bool, animated: Bool) {
+      
+        if imageArray.count < 2 {
+            let alert = UIAlertController(title: "写真を比較できません", message: "2枚以上の写真が必要です。", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default) { action in
+                self.dismiss(animated: true, completion: nil)
+            }
+            alert.addAction(ok)
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        
         super.setEditing(editing, animated: animated)
         tableView.isEditing = editing
         
@@ -72,25 +83,23 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             album.isEnabled = true
         }
         
-
-        if(imageArray.count < 2) {
-            tableView.isEditing = false
-            let alert = UIAlertController(title: "写真を比較できません", message: "2枚以上の写真が必要です。", preferredStyle: .alert)
-        
-            let ok = UIAlertAction(title: "OK", style: .default) { (action) in
-                self.dismiss(animated: true, completion: nil)
-            }
-            alert.addAction(ok)
-
-            present(alert, animated: true, completion: nil)
-        }
     }
     
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool{
     
-        if(indexPath.row < 2) { return false }
-        else { return true }
+    
+    // MARK: -2枚の選択した画像と日付を画面遷移後に表示する
+    
+    //Segue準備
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let subVC = segue.destination as! SubViewController
+        subVC
     }
+    
+    
+    
+    
+    
+    
     
     // MARK: -tableViewの設定
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
