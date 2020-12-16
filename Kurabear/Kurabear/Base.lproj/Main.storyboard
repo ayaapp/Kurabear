@@ -119,7 +119,10 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="label" destination="Xfu-1T-hDB" id="bfW-HT-MeB"/>
+                        <outlet property="imageView1" destination="tiW-ox-unc" id="eg5-d5-jcM"/>
+                        <outlet property="imageView2" destination="Ta6-Ly-gVv" id="7VH-Ch-aJI"/>
+                        <outlet property="label1" destination="Xfu-1T-hDB" id="F5d-Xz-Eu3"/>
+                        <outlet property="label2" destination="MAP-Fe-7TO" id="0ah-pO-Asu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jgd-Od-9a3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -73,8 +73,13 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             return
         }
         
+        if isEditing == true{
+            performSegue(withIdentifier: "SubViewController", sender: nil)
+        }
+        
         super.setEditing(editing, animated: animated)
         tableView.isEditing = editing
+        
         
         
         if self.tableView.isEditing == true{
@@ -94,10 +99,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         let subVC = segue.destination as! SubViewController
         subVC
     }
-    
-    
-    
-    
     
     
     

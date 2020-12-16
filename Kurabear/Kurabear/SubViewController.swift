@@ -9,19 +9,14 @@ import Foundation
 import UIKit
  
 class SubViewController: UIViewController{
- 
-    
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var label: UILabel!
-    
-    var selectedImage: UIImage!
-    var selectedDate: String = ""
+    @IBOutlet weak var imageView1: UIImageView!
+    @IBOutlet weak var imageView2: UIImageView!
+    @IBOutlet weak var label1: UILabel!
+    @IBOutlet weak var label2: UILabel!
     override func viewDidLoad() {
                 super.viewDidLoad()
         
-        imageView.image = selectedImage
-        label.text = selectedDate
         // 画像のアスペクト比を維持しUIImageViewサイズに収まるように表示
-        imageView.contentMode = UIView.ContentMode.scaleAspectFit
+        imageView1.contentMode = UIView.ContentMode.scaleAspectFit
     }
 }
