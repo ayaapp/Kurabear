@@ -79,7 +79,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             performSegue(withIdentifier: "SubViewController", sender: nil)
             selectedCell.removeAll()
         }
-        
+        if isEditing == true, selectedCell.count == 1{
+            selectedCell.removeAll()
+        }
         
         super.setEditing(editing, animated: animated)
         tableView.isEditing = editing
@@ -103,6 +105,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         if (segue.identifier == "SubViewController"){
             let subVC = segue.destination as! SubViewController
+           
             
         }
        
