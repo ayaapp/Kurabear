@@ -75,8 +75,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         //Doneを押したら画面遷移
         
-        if isEditing == true,selectedCell.count == 2{
+        if isEditing == true, selectedCell.count == 2{
             performSegue(withIdentifier: "SubViewController", sender: nil)
+            selectedCell.removeAll()
         }
         
         
