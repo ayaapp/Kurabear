@@ -105,7 +105,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         if (segue.identifier == "SubViewController"){
             let subVC = segue.destination as! SubViewController
-           
+            subVC.imageView1 = tableView.image.cellForRow(at: selectedCell[0])
             
         }
        
