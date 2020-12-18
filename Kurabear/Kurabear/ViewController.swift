@@ -73,14 +73,16 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             return
         }
         
-        if isEditing == true{
+        //Doneを押したら画面遷移
+        
+        if isEditing == true,selectedCell.count == 2{
             performSegue(withIdentifier: "SubViewController", sender: nil)
         }
         
+        
         super.setEditing(editing, animated: animated)
         tableView.isEditing = editing
-        
-        
+
         
         if self.tableView.isEditing == true{
             album.isEnabled = false
@@ -96,8 +98,13 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     //Segue準備
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let subVC = segue.destination as! SubViewController
-        subVC
+        
+        
+        if (segue.identifier == "SubViewController"){
+            let subVC = segue.destination as! SubViewController
+            
+        }
+       
     }
     
     
