@@ -77,10 +77,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         if isEditing == true, selectedCell.count == 2{
             performSegue(withIdentifier: "SubViewController", sender: nil)
-            selectedCell.removeAll()
         }
         if isEditing == true, selectedCell.count == 1{
-            selectedCell.removeAll()
+
         }
         
         super.setEditing(editing, animated: animated)
@@ -105,8 +104,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         if (segue.identifier == "SubViewController"){
             let subVC = segue.destination as! SubViewController
-            subVC.imageView1 = tableView.image.cellForRow(at: selectedCell[0])
-            
+            subVC.imageView1.image = imageArray[selectedCell[0].row].image
+
         }
        
     }
