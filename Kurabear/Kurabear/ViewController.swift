@@ -105,6 +105,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         if (segue.identifier == "SubViewController"){
             let subVC = segue.destination as! SubViewController
             subVC.imageView1.image = imageArray[selectedCell[0].row].image
+            subVC.imageView2.image = imageArray[selectedCell[1].row].image
+            subVC.label1.text = imageArray[selectedCell[0].row].date
+            subVC.label2.text = imageArray[selectedCell[1].row].date
+            
 
         }
        
