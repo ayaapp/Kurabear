@@ -12,8 +12,10 @@ import UIKit
 
 class SubViewController: UIViewController{
     
-    var image = UIImage()
-    var date = String()
+    var image1 = UIImage()
+    var image2 = UIImage()
+    var date1 = String()
+    var date2 = String()
     
     @IBOutlet weak var imageView1: UIImageView!
     @IBOutlet weak var imageView2: UIImageView!
@@ -22,10 +24,10 @@ class SubViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        imageView1.image = image
-        imageView2.image = image
-        label1.text = date
-        label2.text = date
+        imageView1.image = image1
+        imageView2.image = image2
+        label1.text = date1
+        label2.text = date2
         
         
     }
